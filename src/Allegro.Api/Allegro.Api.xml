@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Allegro.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Allegro.Api.Application.Services.IAllegroAuthService.GetTokenAppAsync">
+            <summary>
+            获取应用Token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Allegro.Api.Controllers.AuthController">
+            <summary>
+            权限认证管理
+            </summary>
+        </member>
+        <member name="M:Allegro.Api.Controllers.AuthController.GetTokenAppAsync">
+            <summary>
+            获取AccessToken
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Allegro.Api.Controllers.CategoryController">
+            <summary>
+            商品类别管理
+            </summary>
+        </member>
+        <member name="M:Allegro.Api.Controllers.CategoryController.Test">
+            <summary>
+            测试
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.CategoryController.GetContactDetails(System.String)">
+            <summary>
+            Id获取商品类别
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Allegro.Api.Controllers.ContactsController">
+            <summary>
+            联系人
+            </summary>
+        </member>
+        <member name="M:Allegro.Api.Controllers.ContactsController.Test">
+            <summary>
+            联系人测试
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.ContactsController.GetContactDetails">
+            <summary>
+            获取联系人详细
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
