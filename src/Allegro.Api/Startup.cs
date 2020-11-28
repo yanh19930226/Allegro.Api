@@ -18,6 +18,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace Allegro.Api
 {
@@ -42,6 +44,19 @@ namespace Allegro.Api
             services.AddScoped<IAllegroAuthService, AllegroAuthService>();
             services.AddCoreSwagger()
                         .AddCoreSeriLog();
+
+            services.AddHttpClient<AllegroClient>().AddPolicyHandler((services, request) => HttpPolicyExtensions.HandleTransientHttpError()
+                                                                .WaitAndRetryAsync(new[]
+                                                                {
+                                                                     TimeSpan.FromSeconds(1),
+                                                                     TimeSpan.FromSeconds(5),
+                                                                     TimeSpan.FromSeconds(10)
+                                                                },
+                                                                onRetry: (outcome, timespan, retryAttempt, context) =>
+                                                                {
+                                                                    services.GetService<ILogger<AllegroClient>>()?.LogWarning("—”≥Ÿ {delay}ms, ÷ÿ–¬÷ÿ ‘ {retry}.", timespan.TotalMilliseconds, retryAttempt);
+                                                                }));
+
         }
 
         public override void CommonConfigure(IApplicationBuilder app, IWebHostEnvironment env)
