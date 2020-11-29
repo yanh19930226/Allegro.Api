@@ -6,7 +6,7 @@ namespace Allegro.SDK.Models.Categories
 {
     public class GetCategoryRequest : BaseRequest<CategoryResponse>
     {
-        public GetCategoryRequest(string catId)
+        public GetCategoryRequest(string token,string catId) :base(token)
         {
             categoryId = catId;
         }

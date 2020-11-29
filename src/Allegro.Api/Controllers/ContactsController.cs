@@ -14,17 +14,6 @@ namespace Allegro.Api.Controllers
     public class ContactsController : Controller
     {
         /// <summary>
-        /// 联系人测试
-        /// </summary>
-        /// <returns></returns>
-        [Route("Test")]
-        [HttpGet]
-        public IActionResult Test()
-        {
-            return Ok();
-        }
-
-        /// <summary>
         /// 获取联系人详细
         /// </summary>
         /// <returns></returns>

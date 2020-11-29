@@ -6,6 +6,9 @@ namespace Allegro.SDK.Models.Contacts
 {
     public class CreateContactRequest : BaseRequest<CreateContactResponse>
     {
+        public CreateContactRequest(string token) : base(token)
+        {
+        }
         public string name { get; set; }
         public List<Email> emails { get; set; }
         public List<Phone> phones { get; set; }

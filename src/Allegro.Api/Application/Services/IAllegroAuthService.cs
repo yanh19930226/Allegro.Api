@@ -13,6 +13,12 @@ namespace Allegro.Api.Application.Services
         /// 获取应用Token
         /// </summary>
         /// <returns></returns>
-        Task<AllegroResult<AppAuthTokenResponse>> GetTokenAppAsync();
+        Task<AllegroResult<AuthTokenResponse>> GetTokenAppAsync();
+        /// <summary>
+        /// 获取应用Token
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<AllegroResult<AuthTokenResponse>> GetTokenUserAsync(string code);
     }
 }

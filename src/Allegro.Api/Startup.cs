@@ -8,6 +8,7 @@ using Allegro.Api.Application.Services.Impl;
 using Allegro.SDK;
 using Core;
 using Core.Logger;
+using Core.Redis;
 using Core.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -41,21 +42,27 @@ namespace Allegro.Api
             var settings = services.BuildServiceProvider().GetService<IOptions<Appsettings>>().Value;
             var client = new HttpClient();
             services.AddSingleton(new AllegroClient(client, settings.Allegro.ClientId, settings.Allegro.ClientSecret, settings.Allegro.IsDev ? EnvEnum.Dev : EnvEnum.Prod));
+
+            #region  ToDo 批量注入
             services.AddScoped<IAllegroAuthService, AllegroAuthService>();
+            services.AddScoped<IAllegroCategoryService, AllegroCategoryService>(); 
+            #endregion
+
             services.AddCoreSwagger()
+                        .AddRedis()
                         .AddCoreSeriLog();
 
-            services.AddHttpClient<AllegroClient>().AddPolicyHandler((services, request) => HttpPolicyExtensions.HandleTransientHttpError()
-                                                                .WaitAndRetryAsync(new[]
-                                                                {
-                                                                     TimeSpan.FromSeconds(1),
-                                                                     TimeSpan.FromSeconds(5),
-                                                                     TimeSpan.FromSeconds(10)
-                                                                },
-                                                                onRetry: (outcome, timespan, retryAttempt, context) =>
-                                                                {
-                                                                    services.GetService<ILogger<AllegroClient>>()?.LogWarning("延迟 {delay}ms, 重新重试 {retry}.", timespan.TotalMilliseconds, retryAttempt);
-                                                                }));
+            //services.AddHttpClient<AllegroClient>().AddPolicyHandler((services, request) => HttpPolicyExtensions.HandleTransientHttpError()
+            //                                                    .WaitAndRetryAsync(new[]
+            //                                                    {
+            //                                                         TimeSpan.FromSeconds(1),
+            //                                                         TimeSpan.FromSeconds(5),
+            //                                                         TimeSpan.FromSeconds(10)
+            //                                                    },
+            //                                                    onRetry: (outcome, timespan, retryAttempt, context) =>
+            //                                                    {
+            //                                                        services.GetService<ILogger<AllegroClient>>()?.LogWarning("延迟 {delay}ms, 重新重试 {retry}.", timespan.TotalMilliseconds, retryAttempt);
+            //                                                    }));
 
         }
 

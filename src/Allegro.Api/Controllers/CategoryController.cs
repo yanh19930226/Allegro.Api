@@ -17,21 +17,13 @@ namespace Allegro.Api.Controllers
     [Route("Api/Category")]
     public class CategoryController : Controller
     {
+
         private readonly IAllegroCategoryService _categoryService;
+
         public CategoryController(IAllegroCategoryService categoryService)
         {
-            _categoryService = categoryService;
-        }
 
-        /// <summary>
-        /// 测试
-        /// </summary>
-        /// <returns></returns>
-        [Route("Test")]
-        [HttpGet]
-        public string Test()
-        {
-            return "Test";
+            _categoryService = categoryService;
 
         }
         /// <summary>
@@ -42,6 +34,7 @@ namespace Allegro.Api.Controllers
         [HttpGet]
         public async Task<AllegroResult<CategoryResponse>> GetContactDetails(string Id)
         {
+
             return await _categoryService.GetCategoryAsync(Id);
          
         }

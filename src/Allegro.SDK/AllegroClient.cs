@@ -14,6 +14,7 @@ namespace Allegro.SDK
         public HttpClient _client { get; }
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private readonly string _redirectUri;
         private readonly EnvEnum _envEnum;
 
         public AllegroClient(HttpClient client, string clientId, string clientSecret, EnvEnum envEnum = EnvEnum.Dev)
@@ -48,31 +49,38 @@ namespace Allegro.SDK
 
             AllegroResult<T> result = new AllegroResult<T>();
 
-            if (request.Request==RequestEnum.Auth)
+            _client.DefaultRequestHeaders.Clear();
+
+            _client.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
+
+            _client.DefaultRequestHeaders.Add("Accept-Language", "en-US");
+
+            if (request.Request == RequestEnum.User)
             {
-                url = "https://allegro.pl.allegrosandbox.pl/"+request.Url;
+
+                url = "https://allegro.pl.allegrosandbox.pl/auth/oauth" + request.Url+ "&redirect_uri="+ _redirectUri;
 
                 byte[] bytes = Encoding.UTF8.GetBytes(_clientId + ":" + _clientSecret);
 
-                _client.DefaultRequestHeaders.Clear();
+                _client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(bytes));
+
+            }
+
+            if (request.Request==RequestEnum.App)
+            {
+                url = "https://allegro.pl.allegrosandbox.pl/auth/oauth" + request.Url;
+
+                byte[] bytes = Encoding.UTF8.GetBytes(_clientId + ":" + _clientSecret);
 
                 _client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(bytes));
 
-                _client.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
-
-                _client.DefaultRequestHeaders.Add("Accept-Language", "en-US");
             }
-            else
+
+            if (request.Request == RequestEnum.Api)
             {
                 url = $"{GetApiBaseUrl()}{request.Url}";
 
-                _client.DefaultRequestHeaders.Clear();
-
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
-
-                _client.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
-
-                _client.DefaultRequestHeaders.Add("Accept-Language", "en-US");
 
             }
 

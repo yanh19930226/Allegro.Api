@@ -1,5 +1,7 @@
 ﻿using Allegro.SDK;
 using Allegro.SDK.Models.AuthTokens;
+using Core.Redis;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,16 +12,26 @@ namespace Allegro.Api.Application.Services.Impl
 {
     public class AllegroAuthService : IAllegroAuthService
     {
+
+        private readonly IDatabase _redis;
+
         private AllegroClient _client;
-        public AllegroAuthService(AllegroClient client)
+
+        public AllegroAuthService(AllegroClient client, RedisClient redisclient)
         {
             _client = client;
-        }
 
-        public async Task<AllegroResult<AppAuthTokenResponse>> GetTokenAppAsync()
+            _redis = redisclient.GetDatabase();
+        }
+        /// <summary>
+        /// 获取AppAccessToken
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AllegroResult<AuthTokenResponse>> GetTokenAppAsync()
         {
-            var request = new AppAuthTokenRequest();
-            request.Request = RequestEnum.Auth;
+            var request = new AppAuthTokenRequest(_redis.StringGet("AllegroAppToken"));
+
+            request.Request = RequestEnum.App;
 
             #region 写入Allegro认证信息
             //var claims = new[] {
@@ -40,8 +52,27 @@ namespace Allegro.Api.Application.Services.Impl
             //
             #endregion
 
-            var res= await _client.GetAsync<AppAuthTokenResponse>(request);
-            //var token = new JwtSecurityTokenHandler().WriteToken(res.Result.access_token);
+            var res= await _client.GetAsync<AuthTokenResponse>(request);
+
+            _redis.StringSet("AllegroAppToken", res.Result.access_token);
+
+            return res;
+
+        }
+        /// <summary>
+        /// 获取UserAccessToken
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AllegroResult<AuthTokenResponse>> GetTokenUserAsync(string code)
+        {
+            var request = new UserAuthTokenRequest(code,null);
+
+            request.Request = RequestEnum.User;
+
+            var res = await _client.GetAsync<AuthTokenResponse>(request);
+
+            _redis.StringSet("AllegroUserToken", res.Result.access_token);
+
             return res;
 
         }

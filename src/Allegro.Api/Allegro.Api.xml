@@ -10,6 +10,42 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Allegro.Api.Application.Services.IAllegroAuthService.GetTokenUserAsync(System.String)">
+            <summary>
+            获取应用Token
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.Impl.AllegroAuthService.GetTokenAppAsync">
+            <summary>
+            获取AppAccessToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.Impl.AllegroAuthService.GetTokenUserAsync(System.String)">
+            <summary>
+            获取UserAccessToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Allegro.Api.Controllers.AccountController">
+            <summary>
+            登入管理
+            </summary>
+        </member>
+        <member name="M:Allegro.Api.Controllers.AccountController.Register">
+            <summary>
+            注册
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.AccountController.Login">
+            <summary>
+            登入
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Allegro.Api.Controllers.AuthController">
             <summary>
             权限认证管理
@@ -17,7 +53,19 @@
         </member>
         <member name="M:Allegro.Api.Controllers.AuthController.GetTokenAppAsync">
             <summary>
-            获取AccessToken
+            获取应用AccessToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.AuthController.GetAllegroLoginUrl">
+            <summary>
+            获取登入Allegro链接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.AuthController.GetTokenUserAsync(System.String)">
+            <summary>
+            获取用户Token
             </summary>
             <param name="code"></param>
             <returns></returns>
@@ -26,12 +74,6 @@
             <summary>
             商品类别管理
             </summary>
-        </member>
-        <member name="M:Allegro.Api.Controllers.CategoryController.Test">
-            <summary>
-            测试
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Allegro.Api.Controllers.CategoryController.GetContactDetails(System.String)">
             <summary>
@@ -43,12 +85,6 @@
             <summary>
             联系人
             </summary>
-        </member>
-        <member name="M:Allegro.Api.Controllers.ContactsController.Test">
-            <summary>
-            联系人测试
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Allegro.Api.Controllers.ContactsController.GetContactDetails">
             <summary>
