@@ -23,6 +23,7 @@ namespace Allegro.Api.Application.Services.Impl
 
             _redis = redisclient.GetDatabase();
         }
+       
         /// <summary>
         /// 获取AppAccessToken
         /// </summary>
@@ -33,25 +34,6 @@ namespace Allegro.Api.Application.Services.Impl
 
             request.Request = RequestEnum.App;
 
-            #region 写入Allegro认证信息
-            //var claims = new[] {
-            //        new Claim(ClaimTypes.Name, user.Login),
-            //        new Claim(ClaimTypes.Email, user.Login),
-            //        new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddMinutes(_settings.JWT.Expires)).ToUnixTimeSeconds()}"),
-            //        new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}")
-            //    };
-            //var key = new SymmetricSecurityKey(_settings.JWT.SecurityKey.SerializeUtf8());
-            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var securityToken = new JwtSecurityToken(
-            //    issuer: _settings.JWT.Domain,
-            //    audience: _settings.JWT.Domain,
-            //    claims: claims,
-            //    expires: DateTime.Now.AddMinutes(_settings.JWT.Expires),
-            //    signingCredentials: creds);
-            //var token = new JwtSecurityTokenHandler().WriteToken(securityToken); 
-            //
-            #endregion
-
             var res= await _client.GetAsync<AuthTokenResponse>(request);
 
             _redis.StringSet("AllegroAppToken", res.Result.access_token);
@@ -59,6 +41,7 @@ namespace Allegro.Api.Application.Services.Impl
             return res;
 
         }
+
         /// <summary>
         /// 获取UserAccessToken
         /// </summary>
@@ -71,10 +54,31 @@ namespace Allegro.Api.Application.Services.Impl
 
             var res = await _client.GetAsync<AuthTokenResponse>(request);
 
+            //根据用户Id 写入UserToken
             _redis.StringSet("AllegroUserToken", res.Result.access_token);
 
             return res;
 
+        }
+
+        /// <summary>
+        /// 刷新用户令牌
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AllegroResult<AuthTokenResponse>> GetRefreshTokenUserAsync()
+        {
+           var refreshToken= _redis.StringGet("AllegroRefreshToken");
+
+            var request = new RefreshTokenRequest(refreshToken);
+
+            request.Request = RequestEnum.Refresh;
+
+            var res = await _client.GetAsync<AuthTokenResponse>(request);
+
+            //根据用户Id 写入RefreshToken
+            _redis.StringSet("AllegroRefreshToken", res.Result.refresh_token);
+
+            return res;
         }
     }
 }

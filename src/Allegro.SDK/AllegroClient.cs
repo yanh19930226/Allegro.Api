@@ -55,6 +55,17 @@ namespace Allegro.SDK
 
             _client.DefaultRequestHeaders.Add("Accept-Language", "en-US");
 
+            if (request.Request == RequestEnum.Refresh)
+            {
+
+                url = "https://allegro.pl.allegrosandbox.pl/auth/oauth" + request.Url + "&redirect_uri=" + _redirectUri;
+
+                byte[] bytes = Encoding.UTF8.GetBytes(_clientId + ":" + _clientSecret);
+
+                _client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(bytes));
+
+            }
+
             if (request.Request == RequestEnum.User)
             {
 
@@ -108,26 +119,28 @@ namespace Allegro.SDK
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<AllegroResult<string>> PostAsync<T>(BaseRequest<T> request)
+        public async Task<AllegroResult<T>> PostAsync<T>(BaseRequest<T> request)
         {
-            AllegroResult<string> result = new AllegroResult<string>();
+            AllegroResult<T> result = new AllegroResult<T>();
             var url = $"{GetApiBaseUrl()}";
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
             var httpResponse = await _client.GetAsync(url);
+
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            T obj = JsonConvert.DeserializeObject<T>(content);
+
             if (httpResponse.StatusCode != HttpStatusCode.OK)
             {
-                result.Failed("access_token不正确");
-                return result;
+                result.Failed(httpResponse.StatusCode.ToString());
             }
-            var content = await httpResponse.Content.ReadAsStringAsync();
-            //var user = content.DeJson<UserResponse>();
-            //if (user.IsNull())
-            //{
-            //    result.Failed("未获取到用户数据");
-            //    return result;
-            //}
+            else
+            {
+                result.Success(httpResponse.StatusCode.ToString());
+            }
+            result.Result = obj;
+
             return await Task.FromResult(result);
         }
-
     }
 }

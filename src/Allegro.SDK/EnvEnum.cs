@@ -11,6 +11,7 @@ namespace Allegro.SDK
     }
     public enum RequestEnum
     {
+        Refresh,
         User,
         App,
         Api

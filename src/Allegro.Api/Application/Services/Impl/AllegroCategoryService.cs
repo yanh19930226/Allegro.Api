@@ -21,7 +21,9 @@ namespace Allegro.Api.Application.Services.Impl
         public async Task<AllegroResult<CategoryResponse>> GetCategoryAsync(string categoryId)
         {
             var token = _redis.StringGet("AllegroAppToken");
+
             GetCategoryRequest request = new GetCategoryRequest(token, categoryId);
+
             return await _client.GetAsync(request);
         }
     }

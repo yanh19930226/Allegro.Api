@@ -12,7 +12,14 @@
         </member>
         <member name="M:Allegro.Api.Application.Services.IAllegroAuthService.GetTokenUserAsync(System.String)">
             <summary>
-            获取应用Token
+            获取用户Token
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.IAllegroAuthService.GetRefreshTokenUserAsync">
+            <summary>
+            刷新用户Token
             </summary>
             <param name="code"></param>
             <returns></returns>
@@ -28,6 +35,24 @@
             获取UserAccessToken
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.Impl.AllegroAuthService.GetRefreshTokenUserAsync">
+            <summary>
+            刷新用户令牌
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.Impl.AllegroProductService.GetProductByIdAsync(System.String)">
+            <summary>
+            发布产品
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Application.Services.Impl.AllegroProductService.ProposeProductAsync(Allegro.Api.Abstractions.Dtos.Requests.Products.ProposeProductRequestDto)">
+             <summary>
+            发布产品
+             </summary>
+             <returns></returns>
         </member>
         <member name="T:Allegro.Api.Controllers.AccountController">
             <summary>
@@ -90,6 +115,30 @@
             <summary>
             获取联系人详细
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Allegro.Api.Controllers.ProductsController">
+            <summary>
+            产品
+            </summary>
+        </member>
+        <member name="M:Allegro.Api.Controllers.ProductsController.ProposeProductAsync(Allegro.Api.Abstractions.Dtos.Requests.Products.ProposeProductRequestDto)">
+            <summary>
+            发布产品
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.ProductsController.ExcelProposeProductAsync(Allegro.Api.Abstractions.Dtos.Requests.Products.ProposeProductRequestDto)">
+            <summary>
+            上传Exccel发布产品
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Allegro.Api.Controllers.ProductsController.GetProductByIdAsync(System.String)">
+            <summary>
+            根据Id获取产品
+            </summary>
+            <param name="productId">产品Id</param>
             <returns></returns>
         </member>
     </members>

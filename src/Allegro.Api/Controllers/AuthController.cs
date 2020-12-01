@@ -50,8 +50,11 @@ namespace Allegro.Api.Controllers
         public AllegroResult<string> GetAllegroLoginUrl()
         {
             var res =new  AllegroResult<string>();
+
             var uri = "https://allegro.pl.allegrosandbox.pl/auth/oauth/authorize?response_type=code" + "&client_id=" + _settings.Allegro.ClientId + "&redirect_uri=" + _settings.Allegro.RedirectUri;
+
             res.Success(uri, AllegroResultCode.Succeed.ToString());
+
             return res;
         }
         /// <summary>

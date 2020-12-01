@@ -7,9 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{47813AE2-147
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{750D08F0-B27D-4F0E-BFC0-C2216934E4D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allegro.Api", "src\Allegro.Api\Allegro.Api.csproj", "{38D6727B-3878-4F0A-8D84-67B82801BC65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allegro.Api", "src\Allegro.Api\Allegro.Api.csproj", "{38D6727B-3878-4F0A-8D84-67B82801BC65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allegro.SDK", "src\Allegro.SDK\Allegro.SDK.csproj", "{822814C8-53FB-4EB4-B058-E29DAC4594A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allegro.SDK", "src\Allegro.SDK\Allegro.SDK.csproj", "{822814C8-53FB-4EB4-B058-E29DAC4594A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allegro.Api.Abstractions", "src\Allegro.Api.Abstractions\Allegro.Api.Abstractions.csproj", "{16AA71D2-CAB6-438A-A144-3C0F1CCA4010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{822814C8-53FB-4EB4-B058-E29DAC4594A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{822814C8-53FB-4EB4-B058-E29DAC4594A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{822814C8-53FB-4EB4-B058-E29DAC4594A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16AA71D2-CAB6-438A-A144-3C0F1CCA4010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16AA71D2-CAB6-438A-A144-3C0F1CCA4010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16AA71D2-CAB6-438A-A144-3C0F1CCA4010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16AA71D2-CAB6-438A-A144-3C0F1CCA4010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{38D6727B-3878-4F0A-8D84-67B82801BC65} = {47813AE2-1474-482E-87FB-3C3C2916B392}
 		{822814C8-53FB-4EB4-B058-E29DAC4594A0} = {47813AE2-1474-482E-87FB-3C3C2916B392}
+		{16AA71D2-CAB6-438A-A144-3C0F1CCA4010} = {47813AE2-1474-482E-87FB-3C3C2916B392}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C048E8C5-48C3-4A84-9933-9184F42409A0}
