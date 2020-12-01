@@ -22,7 +22,7 @@ namespace Allegro.Api.Application.Services.Impl
         {
             var token = _redis.StringGet("AllegroAppToken");
 
-            GetCategoryRequest request = new GetCategoryRequest(token, categoryId);
+            GetCategoryRequest request = new GetCategoryRequest(new GetCategoryRequestParameter { categoryId= categoryId },token);
 
             return await _client.GetAsync(request);
         }
