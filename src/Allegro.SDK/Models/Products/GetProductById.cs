@@ -4,14 +4,18 @@ using System.Text;
 
 namespace Allegro.SDK.Models.Products
 {
-    public class GetProductByIdRequest : BaseRequest<GetProductByIdResponse>
+    public class GetProductByIdRequest : BaseRequest<GetProductByIdResponse, GetProductByIdRequestParameter>
     {
-        public GetProductByIdRequest(string productId,string token):base(token)
+        public GetProductByIdRequest(GetProductByIdRequestParameter data, string token):base(data,token)
         {
-            productId = productId;
         }
+        public override string Url => "/sale/products/"+base.Data.productId;
+    }
+
+
+    public class GetProductByIdRequestParameter
+    {
         public string productId { get; set; }
-        public override string Url => "/sale/products/"+this.productId;
     }
 
     public class GetProductByIdResponse

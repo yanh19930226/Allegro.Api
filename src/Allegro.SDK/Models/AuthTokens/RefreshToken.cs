@@ -4,14 +4,12 @@ using System.Text;
 
 namespace Allegro.SDK.Models.AuthTokens
 {
-    public class RefreshTokenRequest : BaseRequest<AuthTokenResponse>
+    public class RefreshTokenRequest : BaseRequest<AuthTokenResponse, string>
     {
-        public RefreshTokenRequest(string token) : base(token)
+        public RefreshTokenRequest(string refreshToken, string token=null) : base(refreshToken, token)
         {
-            RefreshToken = token;
+            //this.Data.RefreshToken = base.Token;
         }
-        public string RefreshToken { get; set; }
-
-        public override string Url => "/token?grant_type=refresh_token&refresh_token="+ RefreshToken;
+        public override string Url => "/token?grant_type=refresh_token&refresh_token="+ this.Data;
     }
 }

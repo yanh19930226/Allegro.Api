@@ -36,13 +36,19 @@ namespace Allegro.SDK
                     return "https://api.allegro.pl.allegrosandbox.pl/";
             }
         }
+        private class JsonContent : StringContent
+        {
+            public JsonContent(object obj) :
+            base(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
+            { }
+        }
         /// <summary>
         /// Get方法
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<AllegroResult<T>> GetAsync<T>(BaseRequest<T> request)
+        public async Task<AllegroResult<T>> GetAsync<T,K>(BaseRequest<T,K> request)
         {
 
             var url = "";
@@ -119,12 +125,15 @@ namespace Allegro.SDK
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<AllegroResult<T>> PostAsync<T>(BaseRequest<T> request)
+        public async Task<AllegroResult<T>> PostAsync<T,K>(BaseRequest<T,K> request)
         {
             AllegroResult<T> result = new AllegroResult<T>();
+
             var url = $"{GetApiBaseUrl()}";
+
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
-            var httpResponse = await _client.GetAsync(url);
+
+            var httpResponse = await _client.PostAsync(url, new JsonContent(new { request.Data }));
 
             var content = await httpResponse.Content.ReadAsStringAsync();
 

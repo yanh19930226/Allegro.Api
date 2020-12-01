@@ -22,7 +22,6 @@ namespace Allegro.Api.Abstractions.Dtos.Commons
     public class ParameterDto
     {
         public string id { get; set; }
-        public string name { get; set; }
     }
     public class OfferRequirementDto
     {

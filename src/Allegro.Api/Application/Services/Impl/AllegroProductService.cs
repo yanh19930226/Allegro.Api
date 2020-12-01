@@ -29,11 +29,11 @@ namespace Allegro.Api.Application.Services.Impl
         /// <returns></returns>
         public async Task<AllegroResult<GetProductByIdResponse>> GetProductByIdAsync(string id)
         {
-            var request = new GetProductByIdRequest(id, _redis.StringGet("AllegroAppToken"));
+            var request = new GetProductByIdRequest(new GetProductByIdRequestParameter { productId =id}, _redis.StringGet("AllegroAppToken"));
 
             request.Request = RequestEnum.Api;
 
-            var res = await _client.GetAsync<GetProductByIdResponse>(request);
+            var res = await _client.GetAsync(request);
         
             return res;
 
@@ -44,11 +44,12 @@ namespace Allegro.Api.Application.Services.Impl
         /// <returns></returns>
         public async Task<AllegroResult<ProposeProductResponse>> ProposeProductAsync(ProposeProductRequestDto dto)
         {
-            var request = new ProposeProductRequest(dto.name,dto.category.MapTo<Category>(),dto.images.MapTo<List<Images>>(), dto.parameters.MapTo<List<Parameter>>(), _redis.StringGet("AllegroAppToken"));
+
+            var request = new ProposeProductRequest(new ProposeProductRequestParameter { name= dto.name, category = dto.category.MapTo<Category>() , images = dto.images.MapTo<List<Images>>() , parameters = dto.parameters.MapTo<List<Parameter>>() }, _redis.StringGet("AllegroAppToken"));
 
             request.Request = RequestEnum.Api;
 
-            var res = await _client.PostAsync<ProposeProductResponse>(request);
+            var res = await _client.PostAsync(request);
 
             return res;
         }

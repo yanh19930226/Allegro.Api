@@ -4,17 +4,20 @@ using System.Text;
 
 namespace Allegro.SDK.Models.Contacts
 {
-    public class CreateContactRequest : BaseRequest<CreateContactResponse>
+    public class CreateContactRequest : BaseRequest<CreateContactResponse, CreateContactRequestParameter>
     {
-        public CreateContactRequest(string token) : base(token)
+        public CreateContactRequest(CreateContactRequestParameter data,string token) : base(data,token)
         {
         }
+        public override string Url => "sale/offer-contacts";
+    }
+    public class CreateContactRequestParameter
+    {
         public string name { get; set; }
         public List<Email> emails { get; set; }
         public List<Phone> phones { get; set; }
-
-        public override string Url => "sale/offer-contacts";
     }
+
 
     public class CreateContactResponse
     {

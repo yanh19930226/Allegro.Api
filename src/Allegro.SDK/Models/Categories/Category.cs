@@ -4,14 +4,19 @@ using System.Text;
 
 namespace Allegro.SDK.Models.Categories
 {
-    public class GetCategoryRequest : BaseRequest<CategoryResponse>
+    public class GetCategoryRequest : BaseRequest<CategoryResponse, GetCategoryRequestParameter>
     {
-        public GetCategoryRequest(string token,string catId) :base(token)
+        public GetCategoryRequest(GetCategoryRequestParameter data,string token) :base(data,token)
         {
-            categoryId = catId;
+           
         }
+        
+        public override string Url => "sale/categories/"+this.Data.categoryId;
+    }
+
+    public class GetCategoryRequestParameter
+    {
         public string categoryId { get; set; }
-        public override string Url => "sale/categories/"+this.categoryId;
     }
 
     public class CategoryResponse

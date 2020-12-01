@@ -30,11 +30,11 @@ namespace Allegro.Api.Application.Services.Impl
         /// <returns></returns>
         public async Task<AllegroResult<AuthTokenResponse>> GetTokenAppAsync()
         {
-            var request = new AppAuthTokenRequest(_redis.StringGet("AllegroAppToken"));
+            var request = new AppAuthTokenRequest();
 
             request.Request = RequestEnum.App;
 
-            var res= await _client.GetAsync<AuthTokenResponse>(request);
+            var res= await _client.GetAsync(request);
 
             _redis.StringSet("AllegroAppToken", res.Result.access_token);
 
@@ -48,11 +48,11 @@ namespace Allegro.Api.Application.Services.Impl
         /// <returns></returns>
         public async Task<AllegroResult<AuthTokenResponse>> GetTokenUserAsync(string code)
         {
-            var request = new UserAuthTokenRequest(code,null);
+            var request = new UserAuthTokenRequest(new UserAuthTokenRequestParameter { Code=code});
 
             request.Request = RequestEnum.User;
 
-            var res = await _client.GetAsync<AuthTokenResponse>(request);
+            var res = await _client.GetAsync(request);
 
             //根据用户Id 写入UserToken
             _redis.StringSet("AllegroUserToken", res.Result.access_token);
@@ -73,7 +73,7 @@ namespace Allegro.Api.Application.Services.Impl
 
             request.Request = RequestEnum.Refresh;
 
-            var res = await _client.GetAsync<AuthTokenResponse>(request);
+            var res = await _client.GetAsync(request);
 
             //根据用户Id 写入RefreshToken
             _redis.StringSet("AllegroRefreshToken", res.Result.refresh_token);

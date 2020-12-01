@@ -4,22 +4,26 @@ using System.Text;
 
 namespace Allegro.SDK.Models.Pricings
 {
-    public class GetUserQuotesRequest : BaseRequest<GetUserQuotesResponse>
+    public class GetUserQuotesRequest : BaseRequest<GetUserQuotesResponse, GetUserQuotesRequestParameter>
     {
-        public GetUserQuotesRequest(List<string> offerIds,string token) : base(token)
+        public GetUserQuotesRequest(GetUserQuotesRequestParameter data,string token) : base(data,token)
         {
-            OfferIds = offerIds;
+         
         }
-        public List<string> OfferIds { get; set; }
+       
         ///pricing/offer-quotes? offer.id=<string>&offer.id=< string >
 
-        public override string Url => "/pricing/offer-quotes?"+ ConnecStr(this.OfferIds);
+        public override string Url => "/pricing/offer-quotes?"+ ConnecStr(this.Data.OfferIds);
 
         private string ConnecStr(List<string> str)
         {
-
             return "";
         }
+    }
+
+    public class GetUserQuotesRequestParameter
+    {
+        public List<string> OfferIds { get; set; }
     }
 
     public class GetUserQuotesResponse

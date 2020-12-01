@@ -4,14 +4,16 @@ using System.Text;
 
 namespace Allegro.SDK.Models.AuthTokens
 {
-    public class UserAuthTokenRequest : BaseRequest<AuthTokenResponse>
+    public class UserAuthTokenRequest : BaseRequest<AuthTokenResponse, UserAuthTokenRequestParameter>
     {
-        public UserAuthTokenRequest(string code,string token) : base(token)
+        public UserAuthTokenRequest(UserAuthTokenRequestParameter data,string token=null) : base(data,token)
         {
-            Code = code;
         }
-        public string Code { get; set; }
 
-        public override string Url => "/token?grant_type=authorization_code&code="+this.Code;
+        public override string Url => "/token?grant_type=authorization_code&code="+this.Data.Code;
+    }
+    public class UserAuthTokenRequestParameter
+    {
+        public string Code { get; set; }
     }
 }

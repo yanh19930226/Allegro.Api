@@ -4,17 +4,19 @@ using System.Text;
 
 namespace Allegro.SDK.Models
 {
-    public abstract class BaseRequest<T>
+    public abstract class BaseRequest<T,K>
     {
 
-        public BaseRequest(string token)
+        public BaseRequest(K data,string token)
         {
             Token = token;
+            this.Data = data;
         }
         public RequestEnum Request { get; set; } = RequestEnum.Api;
         public abstract string Url { get; }
 
         public string Token { get; set; }
 
+        public  K Data { get; set; }
     }
 }
