@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Allegro.SDK
 {
+
     /// <summary>
     /// 响应实体
     /// </summary>
@@ -59,6 +60,7 @@ namespace Allegro.SDK
             Code = AllegroResultCode.Failed;
         }
     }
+
     /// <summary>
     /// 响应实体
     /// </summary>
@@ -81,7 +83,6 @@ namespace Allegro.SDK
             Result = result;
         }
     }
-
 
     public enum AllegroResultCode
     {

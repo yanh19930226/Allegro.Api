@@ -128,10 +128,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Allegro.Api.Controllers.ProductsController.ExcelProposeProductAsync(Allegro.Api.Abstractions.Dtos.Requests.Products.ProposeProductRequestDto)">
+        <member name="M:Allegro.Api.Controllers.ProductsController.ExcelProposeProductAsync(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             上传Exccel发布产品
             </summary>
+            <param name="excelfile"></param>
             <returns></returns>
         </member>
         <member name="M:Allegro.Api.Controllers.ProductsController.GetProductByIdAsync(System.String)">

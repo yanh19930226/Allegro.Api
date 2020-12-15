@@ -51,7 +51,9 @@ namespace Allegro.Api
 
             #region  ToDo ÅúÁ¿×¢Èë
             services.AddScoped<IAllegroAuthService, AllegroAuthService>();
-            services.AddScoped<IAllegroCategoryService, AllegroCategoryService>(); 
+            services.AddScoped<IAllegroCategoryService, AllegroCategoryService>();
+            services.AddScoped<IAllegroProductService, AllegroProductService>();
+
             #endregion
 
             services.AddCoreSwagger()

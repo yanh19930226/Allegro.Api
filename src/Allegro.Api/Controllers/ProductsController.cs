@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Allegro.Api.Abstractions.Dtos.Excels;
 using Allegro.Api.Abstractions.Dtos.Requests.Products;
 using Allegro.Api.Application.Services;
 using Allegro.SDK;
 using Allegro.SDK.Models.Products;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Util.Files;
 
 namespace Allegro.Api.Controllers
 {
@@ -35,16 +38,24 @@ namespace Allegro.Api.Controllers
         {
             return await _productService.ProposeProductAsync(product);
         }
-
         /// <summary>
         /// 上传Exccel发布产品
         /// </summary>
+        /// <param name="excelfile"></param>
         /// <returns></returns>
         [Route("ExcelProposeProductAsync")]
         [HttpPost]
-        public async Task<AllegroResult<ProposeProductResponse>> ExcelProposeProductAsync([FromBody] ProposeProductRequestDto product)
+        public async Task<AllegroResult<ProposeProductResponse>> ExcelProposeProductAsync(IFormFile excelfile)
         {
-            return await _productService.ProposeProductAsync(product);
+
+            List<ShopAdvertisement> list = new ExcelHelper<ShopAdvertisement>().ImportFromExcel(excelfile);
+
+            foreach (var item in list)
+            {
+                await _productService.ProposeProductAsync(new ProposeProductRequestDto() { });
+            }
+
+            return await _productService.ProposeProductAsync(new ProposeProductRequestDto() { });
         }
 
         /// <summary>
